@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Movie Ticket Booking</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .container {
+        background: #fff;
+        padding: 20px;
+        width: 380px;
+        margin: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 5px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    input.valid {
+        border-color: green;
+    }
+    input.invalid {
+        border-color: red;
+    }
+    .error {
+        color: red;
+        font-size: 13px;
+        height: 14px;
+        margin-bottom: 8px;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    #ticket {
+        margin-top: 20px;
+        background: #222;
+        color: #0f0;
+        padding: 12px;
+        border-radius: 6px;
+        white-space: pre-line;
+        min-height: 60px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Movie Ticket Booking</h2>
+
+    <label>Name</label>
+    <input type="text" id="name">
+    <div class="error" id="nameError"></div>
+
+    <label>Email</label>
+    <input type="text" id="email">
+    <div class="error" id="emailError"></div>
+
+    <label>Seats (1-10)</label>
+    <input type="number" id="seats">
+    <div class="error" id="seatsError"></div>
+
+    <button onclick="bookTicket()">Book Ticket</button>
+
+    <div id="ticket"></div>
+</div>
+
+<script>
+    function validate(input, regex, message, errorEl) {
+        if (regex.test(input.value)) {
+            input.classList.add("valid");
+            input.classList.remove("invalid");
+            errorEl.textContent = "";
+            return true;
+        } else {
+            input.classList.add("invalid");
+            input.classList.remove("valid");
+            errorEl.textContent = message;
+            return false;
+        }
+    }
+
+    function bookTicket() {
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+        const seats = document.getElementById("seats");
+
+        const nameErr = document.getElementById("nameError");
+        const emailErr = document.getElementById("emailError");
+        const seatsErr = document.getElementById("seatsError");
+
+        const nameValid = validate(name, /^[A-Za-z ]+$/, "Name must contain only alphabets", nameErr);
+        const emailValid = validate(email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Enter a valid email", emailErr);
+        const seatsValid = validate(seats, /^(10|[1-9])$/, "Seats must be from 1 to 10", seatsErr);
+
+        if (nameValid && emailValid && seatsValid) {
+            const booking = {
+                name: name.value,
+                email: email.value,
+                seats: seats.value
+            };
+
+            document.getElementById("ticket").textContent =
+                "🎟 Ticket Booked Successfully!\n\n" +
+                `Name: ${booking.name}\n` +
+                `Email: ${booking.email}\n` +
+                `Seats: ${booking.seats}`;
+        }
+    }
+</script>
+
+</body>
+</html>

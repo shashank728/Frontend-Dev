@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Commerce Product Manager</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f7f7f7;
+        }
+        pre {
+            background: #222;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow:auto;
+        }
+    </style>
+</head>
+<body>
+
+<h2>E-Commerce Product Manager (Classes + Objects)</h2>
+<p>Check the console for output!</p>
+
+<pre id="output"></pre>
+
+<script>
+    class Product {
+        constructor(id, name, price, category) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.category = category;
+        }
+
+        applyDiscount(percent) {
+            this.price = this.price - (this.price * percent / 100);
+        }
+
+        getDetails() {
+            return `ID: ${this.id}, Name: ${this.name}, Price: ₹${this.price}, Category: ${this.category}`;
+        }
+    }
+
+    const products = [
+        new Product(1, "Laptop", 45000, "Electronics"),
+        new Product(2, "Shoes", 1200, "Fashion"),
+        new Product(3, "Headphones", 800, "Electronics"),
+        new Product(4, "Smartwatch", 2500, "Electronics")
+    ];
+
+    products.forEach(p => p.applyDiscount(10));
+
+    const expensiveProducts = products.filter(p => p.price > 1000);
+
+    console.log("Products with price > 1000:");
+    expensiveProducts.forEach(p => console.log(p.getDetails()));
+
+    document.getElementById("output").textContent =
+        "Products with price > 1000:\n" +
+        expensiveProducts.map(p => p.getDetails()).join("\n");
+</script>
+</body>
+</html>

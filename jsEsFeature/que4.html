@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Custom Form Builder</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    #formContainer {
+        background: #fff;
+        padding: 20px;
+        width: 400px;
+        margin: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 15px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        font-size: 15px;
+    }
+    button {
+        padding: 10px 20px;
+        width: 100%;
+        background: #333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    #resultBox {
+        margin-top: 20px;
+        padding: 10px;
+        background: #222;
+        color: #0f0;
+        border-radius: 6px;
+        min-height: 80px;
+        white-space: pre-line;
+    }
+</style>
+</head>
+
+<body>
+
+<h2 style="text-align:center;">Dynamic Form Builder</h2>
+<div id="formContainer"></div>
+<div id="resultBox"></div>
+
+<script>
+    class FormBuilder {
+        constructor(fields, containerId) {
+            this.fields = fields;
+            this.container = document.getElementById(containerId);
+        }
+
+        renderForm() {
+            let html = "<form id='dynamicForm'>";
+
+            this.fields.forEach(field => {
+                html += `
+                    <label>${field.label}</label>
+                    <input type="${field.type}" id="${field.label.toLowerCase()}" placeholder="${field.label}">
+                `;
+            });
+
+            html += "<button type='button' onclick='formBuilder.getFormData()'>Submit</button>";
+            html += "</form>";
+
+            this.container.innerHTML = html;
+        }
+
+        getFormData() {
+            const data = {};
+
+            this.fields.forEach(field => {
+                const key = field.label.toLowerCase();
+                data[key] = document.getElementById(key).value;
+            });
+
+            document.getElementById("resultBox").textContent =
+                "Form Data:\n" + JSON.stringify(data, null, 2);
+        }
+    }
+
+    const fields = [
+        { type: "text", label: "Username" },
+        { type: "email", label: "Email" },
+        { type: "password", label: "Password" },
+        { type: "number", label: "Age" }
+    ];
+
+    const formBuilder = new FormBuilder(fields, "formContainer");
+    formBuilder.renderForm();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Library Management System</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+    }
+    .container {
+        background: #fff;
+        padding: 20px;
+        width: 450px;
+        margin: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 15px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        font-size: 15px;
+    }
+    button {
+        padding: 10px 20px;
+        background: #333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    #booksList {
+        margin-top: 20px;
+        padding: 10px;
+        background: #222;
+        color: #0f0;
+        border-radius: 6px;
+        min-height: 120px;
+        white-space: pre-line;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Library Management System</h2>
+
+    <button onclick="showAvailableBooks()">Show Available Books</button>
+
+    <h3>Issue a Book</h3>
+    <input type="text" id="isbnInput" placeholder="Enter ISBN">
+    <button onclick="issueBookByISBN()">Issue Book</button>
+
+    <div id="booksList"></div>
+</div>
+
+<script>
+    class Book {
+        constructor(title, author, isbn, isIssued = false) {
+            this.title = title;
+            this.author = author;
+            this.isbn = isbn;
+            this.isIssued = isIssued;
+        }
+
+        issueBook() {
+            if (!this.isIssued) {
+                this.isIssued = true;
+                return true;
+            }
+            return false;
+        }
+
+        returnBook() {
+            this.isIssued = false;
+        }
+    }
+
+    const books = [
+        new Book("The Alchemist", "Paulo Coelho", "1111"),
+        new Book("Atomic Habits", "James Clear", "2222"),
+        new Book("Think and Grow Rich", "Napoleon Hill", "3333"),
+        new Book("Harry Potter", "J.K. Rowling", "4444")
+    ];
+
+    function showAvailableBooks() {
+        const available = books.filter(b => !b.isIssued);
+        const output = available.map(b => `Title: ${b.title}\nAuthor: ${b.author}\nISBN: ${b.isbn}\n`).join("\n");
+        document.getElementById("booksList").textContent = output || "No books available.";
+    }
+
+    function issueBookByISBN() {
+        const isbn = document.getElementById("isbnInput").value.trim();
+        const book = books.find(b => b.isbn === isbn);
+
+        if (!book) {
+            alert("Book not found!");
+            return;
+        }
+
+        if (book.issueBook()) {
+            alert("Book issued successfully!");
+        } else {
+            alert("Book is already issued.");
+        }
+
+        showAvailableBooks();
+    }
+</script>
+
+</body>
+</html>
