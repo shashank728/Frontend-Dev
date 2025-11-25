@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Q1 Callback</title>
+</head>
+<body>
+
+<h2>Q1: greetUser Callback</h2>
+<button onclick="runQ1()">Run</button>
+
+<pre id="out"></pre>
+
+<script>
+function showEndMessage() {
+    return "Welcome to the course!";
+}
+
+function greetUser(name, callback) {
+    return "Hello " + name + "\n" + callback();
+}
+
+function runQ1() {
+    document.getElementById("out").textContent =
+        greetUser("Rahul", showEndMessage);
+}
+</script>
+
+</body>
+</html>

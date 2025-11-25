@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Q5 Student Inheritance</title>
+</head>
+<body>
+
+<h2>Q5: Student Inheritance</h2>
+<button onclick="runQ5()">Run</button>
+
+<pre id="out"></pre>
+
+<script>
+function Person(name) {
+    this.name = name;
+}
+
+Person.prototype.showName = function() {
+    return "Name: " + this.name;
+};
+
+function Student(name, branch) {
+    Person.call(this, name);
+    this.branch = branch;
+}
+
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.constructor = Student;
+
+Student.prototype.showBranch = function() {
+    return "Branch: " + this.branch;
+};
+
+function runQ5() {
+    const s = new Student("Amit", "CS");
+    document.getElementById("out").textContent =
+        s.showName() + "\n" +
+        s.showBranch() + "\n" +
+        "instanceof Student: " + (s instanceof Student) + "\n" +
+        "instanceof Person: " + (s instanceof Person);
+}
+</script>
+
+</body>
+</html>

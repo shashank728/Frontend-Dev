@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Q3 this Problem</title>
+</head>
+<body>
+
+<h2>Q3: user Object this Issue</h2>
+<button onclick="runQ3()">Run</button>
+
+<pre id="out"></pre>
+
+<script>
+const user = {
+    name: "John",
+    showName: () => {
+        return "Arrow this.name: " + this.name;
+    }
+};
+
+const fixedUser = {
+    name: "John",
+    showName: function() {
+        return "Normal this.name: " + this.name;
+    }
+};
+
+function runQ3() {
+    document.getElementById("out").textContent =
+        user.showName() + "\n" +
+        fixedUser.showName();
+}
+</script>
+
+</body>
+</html>
